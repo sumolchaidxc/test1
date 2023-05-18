@@ -6,8 +6,18 @@ name: Build and deploy ASP.Net Core app to an Azure Web App
 on: [push]
 
 jobs:
-  buid:
-    runs-on: ubuntu-latest
-    steps:
+  #buid:
+    #runs-on: ubuntu-latest
+    #steps:
   deploy:
     runs-on: ubuntu-latest
+    steps:
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        - name: 'Run az commands'
+          run: |
+            az account show
