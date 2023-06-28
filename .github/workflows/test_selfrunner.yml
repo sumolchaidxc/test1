@@ -24,8 +24,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   
+      - name: Set SAS token expiration
+        run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
+        
       - name: 'Run az commands'
         uses: azure/CLI@v1
         with:
             inlineScript: |
-                  az storage container create -n $CONTAINER --account-name $ACCOUNT --auth-mode login
+                  #az storage container create -n $CONTAINER --account-name $ACCOUNT --auth-mode login
+                  az storage blob upload      -f eShopOnWeb-main.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
+                  ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
