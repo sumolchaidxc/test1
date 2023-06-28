@@ -38,4 +38,4 @@ jobs:
                   #az storage blob upload      -f eShopOnWeb-main.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT --auth-mode login
                   ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT --auth-mode login --as-user | xargs)
                   echo $ZIP_URL
-                  az webapp deploy --name $WEBAPP --resource-group $GROUP --type zip --src-url  $ZIP_URL --async false
+                  az webapp deploy --name $WEBAPP --resource-group $GROUP --src-url  $ZIP_URL
