@@ -3,6 +3,12 @@
 name: Run Azure Login with OIDC
 on: [push]
 
+env:
+      GROUP: Test-RG
+      ACCOUNT: dxcgitstacc01
+      CONTAINER: github-webapp
+      EXPIRY_TIME: 10 minutes
+
 permissions:
       id-token: write
       contents: read
@@ -22,4 +28,5 @@ jobs:
         run: |
           az account show
           az group list
+          az storage container create -n $CONTAINER --account-name $ACCOUNT
           pwd 
