@@ -25,8 +25,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   
       - name: 'Run az commands'
-        run: |
-          az account show
-          az group list
-          az storage container create -n $CONTAINER --account-name $ACCOUNT
-          pwd 
+        uses: azure/CLI@v1
+        with:
+            inlineScript: |
+                  az storage container create -n $CONTAINER --account-name $ACCOUNT --auth-mode login
