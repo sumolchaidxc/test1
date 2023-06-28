@@ -34,6 +34,6 @@ jobs:
         with:
             inlineScript: |
                   #az storage container create -n $CONTAINER --account-name $ACCOUNT --auth-mode login
-                  #az storage blob upload      -f eShopOnWeb-main.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT --auth-mode login
+                  az storage blob upload      -f eShopOnWeb-main.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT --auth-mode login
                   ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT --auth-mode login | xargs)
                   echo $ZIP_URL
